@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// Summary description for Class1
 /// </summary>
 public class Paquet
 {
-	int[,] tabPaquet = new int[52, 2]; // plutot utiliser List<xxxx>, l'ideal serait une liste de tableau
+	private int[,] tabPaquet = new int[52, 2]; // plutot utiliser List<xxxx>, l'ideal serait une liste de tableau
 	public Paquet()
 	{
 		//
@@ -38,7 +39,45 @@ public class Paquet
 	}
 }
 
+public class Joueur
+{
+	//private int[] cartesEnMain = new int[2];
+	private int monnaie = 5000;
+	private int monnaieManche = 0;
 
+	public void init() // mettre les bons parametre
+	{
+		//TODO
+	}
+
+	public int play()
+	{
+		//renvoie la mise que le joueur vas payer a cet instant. -1 pour se coucher
+		return -1;
+	}
+}
+
+public class plateau
+{
+	private int[] tabMises = {0, 0, 0 }; // mettre le nombre de joueur a la place de 3
+	private int pot = 0;
+    private List<int[]> cartesPlateau = new List<int[]>();
+	private Joueur[] listJoueur = new Joueur[3]; // 3 joueurs pour l'instant
+	private int currentPlayer = 0;
+
+	public void newGame()
+	{
+        pot = 0;
+        List<int[]> cartesPlateau = new List<int[]>();
+        int[] tabMises = { 0, 0, 0 };
+    }
+
+	public void JoueurActuelleJoue()
+	{
+		int mise = listJoueur[currentPlayer].play(); // ajouter des parametre pertinent
+		
+	}
+}
 
 
 public class PokerTextuel
