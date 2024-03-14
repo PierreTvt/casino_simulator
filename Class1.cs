@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 /// <summary>
 /// Summary description for Class1
 /// </summary>
 public class Paquet
 {
-	private int[,] tabPaquet = new int[52, 2]; // plutot utiliser List<xxxx>, l'ideal serait une liste de tableau
+private List<int[]> listCartes = new List<int[]>(); // plutot utiliser List<xxxx>, l'ideal serait une liste de tableau
+
 	public Paquet()
 	{
 		//
@@ -17,25 +19,36 @@ public class Paquet
 	public void initPaquet()
 	{
 		// A changer lorsque tabPaquet sera une List (en utilisant la méthode add)
-		for (int couleur=0; couleur<3; couleur++)
+		Console.WriteLine("La taille du paquet est de :" + listCartes.Count);
+		for(int couleur = 0; couleur< 4; couleur++)//création des cartes couleurs
 		{
-			for (int i=1; i<14; i++)
+			for(int valeur = 1; valeur <= 13; valeur++)//création des valeurs 
 			{
-				tabPaquet[(i - 1) * (couleur + 1), 0] = i;
-				tabPaquet[(i - 1) * (couleur + 1), 1] = couleur;
+				listCartes.Add(new int[] {valeur,couleur });//Ajoute dans la liste une carte
 			}
 		}
 	}
-	public int[] piocheCarte(int num)
+	public void Affiche_cartes()
 	{
-		// il faudrait aussi supprimer la carte pioché
-		return  new int[] { tabPaquet[num, 0], tabPaquet[num, 1]}; // renvoie la premiere carte sans la supprimer
+		//Console.WriteLine("1ère carte : " + listCartes[0][1]);
+		//1er crochet corrspond à la carte sélectionnée et le 2ème à la valeur ou couleur (0 ou 1)
+		for (int carte = 0; carte < listCartes.Count; carte++)
+		{
+			Console.WriteLine(carte + "carte : valeur=" + listCartes[carte][0] + "couleur=" + listCartes[carte][1]);
+		}
+		//Affiche les valeurs et les couleurs des 52 cartes
 	}
+	
 	public int[] piocheCarteAlea()
 	{
 		// retourne une carte du paquet aléatoirement, et la supprime
 		// cette méthode peut appeler piocheCarte(num), ou non (a voir le plus simple et le plus clair)
-		return piocheCarte(0);
+		Random aleatoire = new Random();
+		int[] carte = new int[2];
+		int nb_alea = aleatoire.Next(51);
+		carte = listCartes[nb_alea];
+		listCartes.RemoveAt(nb_alea);
+		return carte;
 	}
 }
 
@@ -92,8 +105,10 @@ public class PokerTextuel
 		Console.WriteLine("Debut fonction test");
         // fonction pour faire des tests
         Paquet paquet = new Paquet();
-		int[] carte = paquet.piocheCarte(0);
-		Console.WriteLine("carte:"+carte[0]+" " + carte[1]);
+        int[] carte_alea = new int[2];
+		carte_alea = paquet.piocheCarteAlea();
+		Console.WriteLine("carte aléatoire : valeur =" + carte_alea[0] + "couleur =" + carte_alea[1]);
+		paquet.Affiche_cartes();
         Console.ReadLine();
     }
 }
